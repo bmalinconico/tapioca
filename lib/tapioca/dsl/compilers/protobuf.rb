@@ -130,7 +130,10 @@ module Tapioca
         def type_of(descriptor)
           case descriptor.type
           when :enum
-            descriptor.subtype.enummodule.name
+            # Currently no RBI def is created for the enum so using "descriptor.subtype.enummodule.name"
+            # creates a reference to an undefined constant. Until stronger typing can be introduced we will instead
+            # type it as Symbol. 
+            "Symbol"
           when :message
             descriptor.subtype.msgclass.name
           when :int32, :int64, :uint32, :uint64
